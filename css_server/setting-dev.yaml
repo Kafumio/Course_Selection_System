@@ -1,0 +1,10 @@
+# settings-dev.yaml
+name: "CSS"
+port: 9090
+
+gorm:
+  name: "root"
+  host: "127.0.0.1"
+  port: 3306
+  password: "Lin147258369"
+  dbName: "CSS"
