@@ -3,6 +3,7 @@ package dao
 import (
 	"CSS/model"
 	"fmt"
+	"gorm.io/gorm"
 )
 
 func InsertCourseTeacher(cid, tid int, term string) error {
@@ -61,12 +62,14 @@ func FindCTById(cid int, tid int, term string) (model.CourseTeacher, error) {
 
 func FindCourseTeacherInfo(tid, tFuzzy, cid, cFuzzy int, tname, cname string) ([]model.CourseTeacherInfo, error) {
 	ctInfos := []model.CourseTeacherInfo{}
-	/*
-		dbRes := db.Table("ct").Select("c.cid, cname, t.tid, tname, c.ccredit").
+	var dbRes *gorm.DB
+	if tid == 0 && cid == 0 && tname == "" && cname == "" {
+		dbRes = db.Raw("select * from ct_info")
+	} else {
+		dbRes = db.Table("ct").Select("c.cid, cname, t.tid, tname, c.ccredit").
 			Joins("inner join c on c.cid = ct.cid").
 			Joins("inner join t on t.tid = ct.tid")
-	*/
-	dbRes := db.Raw("select * from ct_info")
+	}
 	if tid != 0 {
 		dbRes.Where("t.tid = ?", tid)
 	}

@@ -14,7 +14,7 @@ import (
 var tea model.Teacher
 
 func AddTeacher(ctx *gin.Context) {
-	ctx.BindJSON(&tea)
+	ctx.ShouldBind(&tea)
 	if services.InsertTea(tea) == false {
 		util.RespErrorWithData(ctx, "插入教师失败")
 		return
@@ -24,7 +24,7 @@ func AddTeacher(ctx *gin.Context) {
 }
 
 func LoginTea(ctx *gin.Context) {
-	ctx.BindJSON(&tea)
+	ctx.ShouldBind(&tea)
 	fmt.Println("正在验证教师登陆 ", tea)
 	t, err := services.FindTeaById(tea.Tid)
 	if err != nil {
@@ -74,7 +74,7 @@ func DeleteTeaById(ctx *gin.Context) {
 }
 
 func UpdateTea(ctx *gin.Context) {
-	ctx.BindJSON(&tea)
+	ctx.ShouldBind(&tea)
 	fmt.Println("更新教师 ", tea)
 	if services.UpdateTeaById(tea) == false {
 		util.RespErrorWithData(ctx, "更新教师失败")

@@ -33,9 +33,10 @@ func DeleteSCTById(sid, cid, tid int, term string) bool {
 	return dao.InsertSCT(sct) == nil
 }
 
-func FindByIdWithTerm(sid, cid, tid int, term string) ([]model.SCTInfo, error) {
-	return dao.FindSCTBySearch(sid, 0, cid, 0, tid, 0,
+func FindByIdWithTerm(sid, cid, tid int, term string) (model.SCTInfo, error) {
+	sct, err := dao.FindSCTBySearch(sid, 0, cid, 0, tid, 0,
 		0, 0, "", "", "", "")
+	return sct[0], err
 }
 
 func UpdateSCTById(sid, cid, tid, grade int, term string) bool {

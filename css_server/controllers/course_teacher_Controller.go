@@ -67,7 +67,7 @@ func FindCTInfo(ctx *gin.Context) {
 }
 
 func DeleteCTById(ctx *gin.Context) {
-	ctx.BindJSON(&ct)
+	ctx.ShouldBind(&ct)
 	if services.DeleteCTById(ct) == false {
 		util.RespErrorWithData(ctx, "删除课程-教师关系失败")
 		return

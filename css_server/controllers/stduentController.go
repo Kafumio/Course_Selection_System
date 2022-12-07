@@ -12,7 +12,7 @@ import (
 var stu model.Student
 
 func AddStudent(ctx *gin.Context) {
-	ctx.BindJSON(&stu)
+	ctx.ShouldBind(&stu)
 	fmt.Println("正在添加学生对象 ", stu)
 	if services.InsertStu(stu) == false {
 		util.RespErrorWithData(ctx, "添加学生失败")
@@ -23,7 +23,7 @@ func AddStudent(ctx *gin.Context) {
 }
 
 func LoginStu(ctx *gin.Context) {
-	ctx.BindJSON(&stu)
+	ctx.ShouldBind(&stu)
 	fmt.Println("正在验证学生登陆 ", stu)
 	s, err := services.FindStuById(stu.Sid)
 	if err != nil {
@@ -39,7 +39,7 @@ func LoginStu(ctx *gin.Context) {
 }
 
 func FindStuBySearch(ctx *gin.Context) {
-	ctx.BindJSON(&stu)
+	ctx.ShouldBind(&stu)
 	var fuzzy int
 	if stu == (model.Student{}) {
 		fuzzy = 0
@@ -96,7 +96,7 @@ func DeleteStuById(ctx *gin.Context) {
 }
 
 func UpdateStu(ctx *gin.Context) {
-	ctx.BindJSON(&stu)
+	ctx.ShouldBind(&stu)
 	fmt.Println("更新学生信息：", stu)
 	if services.UpdateStuById(stu) == false {
 		util.RespErrorWithData(ctx, "更新学生信息失败")

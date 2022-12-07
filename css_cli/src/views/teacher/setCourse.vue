@@ -1,12 +1,15 @@
 <template>
-  <div id="app">
+  <div>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'app'
+  name: "setCourse"
 }
 </script>
 
+<style scoped>
+
+</style>

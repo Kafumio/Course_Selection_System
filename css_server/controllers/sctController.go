@@ -14,7 +14,7 @@ import (
 var sct model.StudentCourseTeacher
 
 func InsertSCT(ctx *gin.Context) {
-	ctx.BindJSON(&sct)
+	ctx.ShouldBind(&sct)
 	if services.IsSCTExist(sct) {
 		util.RespErrorWithData(ctx, "禁止重复选课")
 		return

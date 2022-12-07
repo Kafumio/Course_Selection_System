@@ -38,7 +38,7 @@ func FindCouById(ctx *gin.Context) {
 }
 
 func AddCourse(ctx *gin.Context) {
-	ctx.BindJSON(&cou)
+	ctx.ShouldBind(&cou)
 	if services.InsertCou(cou) == false {
 		util.RespErrorWithData(ctx, "插入课程失败")
 		return
@@ -58,7 +58,7 @@ func DeleteCouById(ctx *gin.Context) {
 }
 
 func UpdateCou(ctx *gin.Context) {
-	ctx.BindJSON(&cou)
+	ctx.ShouldBind(&cou)
 	fmt.Println("更新教师 ", cou)
 	if services.UpdateCouById(cou) == false {
 		util.RespErrorWithData(ctx, "更新课程失败")

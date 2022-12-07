@@ -3,6 +3,7 @@ package dao
 import (
 	"CSS/model"
 	"fmt"
+	"gorm.io/gorm"
 )
 
 func FindCTInfoByStuId(sid int, term string) ([]model.CourseTeacherInfo, error) {
@@ -27,11 +28,16 @@ func FindCTInfoByStuId(sid int, term string) ([]model.CourseTeacherInfo, error) 
 func FindSCTBySearch(sid, sFuzzy, cid, cFuzzy, tid, tFuzzy,
 	lowBound, highBound int, sname, cname, tname, term string) ([]model.SCTInfo, error) {
 	sctInfos := []model.SCTInfo{}
-	dbRes := db.Table("sct").Select("s.sid, sname, c.cid, " +
-		"cname, t.tid, tname, sct.grade, sct.term").
-		Joins("inner join s on sct.sid = s.sid").
-		Joins("inner join c on sct.cid = c.cid").
-		Joins("inner join t on sct.tid = t.tid")
+	var dbRes *gorm.DB
+	if sid == 0 && tid == 0 && cid == 0 && sname == "" && tname == "" && cname == "" {
+		dbRes = db.Raw("select * from sct_info")
+	} else {
+		dbRes = db.Table("sct").Select("s.sid, sname, c.cid, " +
+			"cname, t.tid, tname, sct.grade, sct.term").
+			Joins("inner join s on sct.sid = s.sid").
+			Joins("inner join c on sct.cid = c.cid").
+			Joins("inner join t on sct.tid = t.tid")
+	}
 	if sid != 0 {
 		dbRes = dbRes.Where("s.sid = ?", sid)
 	}
